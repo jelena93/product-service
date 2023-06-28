@@ -1,6 +1,6 @@
-#logging:
-#  level:
-#    org.apache.kafka: ERROR
+logging:
+  level:
+    org.apache.kafka: ERROR
 
 spring:
   datasource:
