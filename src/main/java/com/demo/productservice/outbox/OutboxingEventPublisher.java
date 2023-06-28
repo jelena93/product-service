@@ -43,7 +43,7 @@ public class OutboxingEventPublisher {
         do {
             noSentEvents = transactionTemplate.execute(status -> {
                 final var outboxedMessages = repository.fetchUnsent(limit);
-                final var sentEvents = repository.fetchUnsent(limit).stream()
+                final var sentEvents = outboxedMessages.stream()
                         .map(message -> {
                             try {
                                 log.info("Sending Outbox message {} ", message);
