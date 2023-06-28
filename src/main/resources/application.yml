@@ -1,0 +1,44 @@
+#logging:
+#  level:
+#    org.apache.kafka: ERROR
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product
+    username: db-user
+    password: db-pass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      schema: product
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    schemas: product
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 3
+      properties:
+        request:
+          timeout:
+            ms: 10000
+        max:
+          block:
+            ms: 10000
+        enable:
+          idempotence: true
+        retry:
+          backoff:
+            ms: 10000
+      acks: all
+
+app:
+  kafka:
+    topic: product
