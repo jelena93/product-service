@@ -39,10 +39,9 @@ Service currently supports the following API operation:
     POST /api/product: Create a new product
 
 * When this API is called service will create product in db with name and price and send this notification to topic on Kafka.
-* 
 
 ### API Documentation
-The API documentation is generated using the OpenAPI specification. You can access the API documentation by visiting [http://localhost:8080/v3/api-docs](http://localhost:8080/swagger-ui.html) in your browser.
+The API documentation is generated using the OpenAPI specification. You can access the API documentation by visiting [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) in your browser.
 
 Swagger UI
 

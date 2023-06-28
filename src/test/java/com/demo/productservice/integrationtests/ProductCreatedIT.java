@@ -38,7 +38,6 @@ public class ProductCreatedIT {
 
     @BeforeEach
     public void setUp() {
-        productRepository.deleteAll();
         kafkaConsumer.subscribe(Collections.singleton(topic));
     }
 
@@ -50,11 +49,14 @@ public class ProductCreatedIT {
     @Test
     public void testCreateProduct() {
         final var productName = "Test Product";
+        var savedProduct = productRepository.findByName(productName);
+        productRepository.deleteById(savedProduct.getId());
         final var response = restTemplate.postForEntity("http://localhost:" + port + "/product",
                 ProductTestUtil.createProductRequest(productName, new BigDecimal("20.30")), Product.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        final var savedProduct = productRepository.findByName(productName);
+
+        savedProduct = productRepository.findByName(productName);
         assertThat(savedProduct).isNotNull();
         assertThat(savedProduct.getPrice()).isEqualTo(new BigDecimal("20.30"));
 
